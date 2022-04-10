@@ -9,6 +9,9 @@ class Converter:
         # Formatting Variables
         background_color = "light blue"
 
+        # Initialise list to hold calculation history
+        self.all_calculations = []
+
         # Converter Frame
         self.converter_frame = Frame(bg=background_color, pady=10)  # No width/height = auto-resize to fit content
         self.converter_frame.grid()
@@ -131,6 +134,11 @@ class Converter:
             else:
                 self.answer_label.configure(text=answer, fg="red")
                 self.temp_entry.configure(bg=error)
+
+            # Add Answer to history list
+            if answer != "Too Cold!":
+                self.all_calculations.append(answer)
+                print(self.all_calculations)
 
             # Add temperature to calculation history
         except ValueError:
