@@ -90,7 +90,6 @@ class Converter:
         self.help_button.grid(row=0, column=2)
 
     def temp_convert(self, low):
-        print(low)
         error = "#ffafaf"  # Pale pink for errors
 
         # Get user input from Entry field
@@ -109,7 +108,6 @@ class Converter:
 
                 # Generate answer
                 answer = f"{to_convert} C is {fahrenheit} F"
-                print(answer)
 
             # Check and convert to C
             elif low == -459 and to_convert >= low:
@@ -121,13 +119,11 @@ class Converter:
 
                 # Generate answer
                 answer = f"{to_convert} F is {celsius} C"
-                print(answer)
 
             else:
                 # Input is invalid (too cold)
                 answer = "Too Cold!"
                 has_errors = "yes"
-                print(answer)
 
             # Display new temperature
             if has_errors == "no":
@@ -162,9 +158,9 @@ class Converter:
     def help(self):
         get_help = Help(self)
         get_help.help_text.configure(text="To use the converter, type the temperature that you would like to convert, "
-                                          "then press the button you would like the convert the temperature to. For ex"
-                                          "ample, to convert 1F to C, you would type 1 into the grey box, then press "
-                                          "the \"To Celsius\" button.")
+                                          "then press the button you would like the convert the temperature to.\n\n"
+                                          "For example, to convert 1F to C, you would type 1 into the grey box,"
+                                          " then press the \"To Celsius\" button.", font="Arial 10 bold")
 
 
 class History:
@@ -199,17 +195,19 @@ class History:
                                        "file of all your calculations for this session.",
                                   wrap=250,
                                   bg=background, width=40,
-                                  font="arial 10 italic", fg="maroon")
+                                  font="arial 10 bold", fg="maroon")
         self.history_text.grid(row=1)
 
         # History output goes here (row 2)
-
         # Generate string from list of calculations
         history_string = ""
 
         if len(calc_history) > 7:
             for item in range(0, 7):
                 history_string += calc_history[len(calc_history) - item - 1] + "\n"
+
+                self.history_text.config(text="Here is your 7 most recent calculations. Use the export button to "
+                                              "create a text file of all your calculations for this session.")
 
         else:
             for item in calc_history:
@@ -283,14 +281,14 @@ class Export:
                                       "file of all your calculations for this session.",
                                  wrap=300, justify=LEFT,
                                  bg=background, width=40,
-                                 font="arial 12 italic", fg="maroon")
+                                 font="arial 10 bold", fg="maroon")
         self.export_text.grid(row=1)
 
         # Warning label (row 2)
         self.export_text = Label(self.export_frame,
                                  text="If the filename you enter below already exists, its contents will be replaced "
                                       "with your calculation history", wrap=275, bg="#ffcccb", fg="black",
-                                 justify=LEFT, font="Arial 12 italic")
+                                 justify=CENTER, font="Arial 9 bold")
         self.export_text.grid(row=2)
 
         # Filename entry box (row 3)
@@ -327,7 +325,6 @@ class Export:
         has_errors = "no"
 
         filename = self.filename_entry.get()
-        print(filename)
 
         for letter in filename:
             if re.match(valid_chars, letter):
@@ -347,11 +344,10 @@ class Export:
 
         if has_errors == "yes":
             self.save_error_label.config(text=f"Invalid filename - {problem}")
-            print()
 
         else:
             filename = filename + ".txt"
-            self.save_error_label.config(text=f"Saved your calculation history as {filename}")
+            self.save_error_label.config(text=f"Saved your history as {filename}")
 
             # Create new file to store data
             f = open(filename, "w+")
@@ -400,7 +396,7 @@ class Help:
 
         # Dismiss button (row 2)
         self.dismiss_btn = Button(self.help_frame,
-                                  text="Dismiss", width=10,
+                                  text="Dismiss", width=10, font="Arial 10 bold",
                                   bg="light salmon",
                                   command=partial(self.close_help, partner))
         self.dismiss_btn.grid(row=2, pady=10)
