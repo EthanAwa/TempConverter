@@ -61,7 +61,7 @@ class Converter:
 
         # Answer label (row 4)
         self.answer_label = Label(self.converter_frame,
-                                  text="Placeholder text (conversion)", font=("Arial", "16", "bold"),
+                                  text="", font=("Arial", "16", "bold"),
                                   fg="black", bg=background_color, padx=10, pady=10)
         self.answer_label.grid(row=4)
 
